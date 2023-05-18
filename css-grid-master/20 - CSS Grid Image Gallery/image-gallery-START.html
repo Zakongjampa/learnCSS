@@ -19,8 +19,6 @@
 
   <section class="gallery">
   </section>
-
-
   <style>
     * {
       box-sizing: border-box;
@@ -47,11 +45,81 @@
 
     .close {
       background: none;
-      color: white;
+      color: rgb(0, 0, 0);
       border: 0;
     }
 
-    .gallery {}
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
+      grid-auto-rows: 100px;
+      grid-auto-flow: dense;
+    }
+
+    .item{
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1;
+      grid-template-rows: 1;
+    }
+
+    .item img{
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .item__overlay{
+      background-color: #ffc60032;
+      grid-row: 1/-1;
+      grid-column: 1/-1;
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      transform: translateY(80%);
+      transition-duration: 1000ms;
+    }
+
+    .item:hover .item__overlay{
+      transform: translateY(0);
+    }
+
+    .item__overlay button{
+      background-color: none;
+      border: 2px solid white;
+      color: white;
+      text-transform: uppercase;
+      background-color: rgba(0, 0, 0, 0.26);
+      padding: 5px;
+    }
+
+    .v2{
+      grid-row: span 2;
+    }
+
+    .v3{
+      grid-row: span 3;
+    }
+
+    .v4{
+      grid-row: span 4;
+    }
+
+     .h2{
+      grid-column: span 2;
+    }
+
+    .h3{
+      grid-column: span 3;
+    }
+
+    .h4{
+      grid-column: span 4;
+    }
+
+    
 
 
 
@@ -70,8 +138,10 @@
       display: grid;
     }
 
-    .overlay figure {
+    .overlay .overlay-inner {
       background: white;
+      align-self: center;
+      justify-self: center;
       width: 700px;
       padding: 20px;
     }
@@ -82,6 +152,49 @@
   </style>
 
   <script>
+
+    gallary = document.querySelector('.gallery');
+    overlay = document.querySelector('.overlay');
+    overlayImage = overlay.querySelector('img');
+    overlayClose = overlay.querySelector('.close');
+
+
+
+   function generateHTML([h,v]){
+    return  `<div class="item h${h} v${v}">
+      <img src="./images/${randomNumber(12)}.jpg" alt="Some images">
+      <div class="item__overlay">
+        <button>View (⓿_⓿)</button>
+        </div>
+      </div>
+    `
+   }
+
+   function handleClick(e){
+    const src = e.currentTarget.querySelector('img').src;
+    overlayImage.src = src;
+    overlay.classList.add("open");
+   }
+
+   
+
+   function close(){
+    overlay.classList.remove('open');
+   }
+
+   function randomNumber(limit){
+    return Math.floor(Math.random() * limit) +1;
+   }
+   const digits = Array.from({length : 50}, ()=>[randomNumber(4), randomNumber(4)]).concat([[1,1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1], [1, 1]]);
+   const html = digits.map(generateHTML).join('');
+
+   gallary.innerHTML = html;
+
+   const items = document.querySelectorAll('.item');
+
+   items.forEach(item=> item.addEventListener('click', handleClick));
+   overlayClose.addEventListener('click', close);
+  
   </script>
 </body>
 
