@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centering the Items</title>
+</head>
+<style>
+    .gridContainer{
+        display: grid;
+        place-content: center;
+        padding: 30px;
+        border: solid 1px red;
+    }
+
+    .flexContainer{
+        display: flex;
+        border: solid 1px red;
+        padding: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .paddingContainer h1{
+        border: solid 1px red;
+        padding: 15vmin;
+    }
+</style>
+<body>
+    <h1>Center Element By Using Grid</h1>
+    <div class="gridContainer">
+        <h3>Some Content</h3>
+    </div>
+
+    <h1>Center Element By Using FlexBox</h1>
+    <div class="flexContainer">
+        <h3>Some Content</h3>
+    </div>
+
+    <h1>Center Element By Using padding</h1>
+    <div class="paddingContainer">
+        <h1>Fluffy Center</h1>
+    </div>
+</body>
+</html>

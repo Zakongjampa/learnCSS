@@ -1,0 +1,90 @@
+:root{
+    --dark :#a3a3a3;
+}
+
+html{
+    margin: 0;
+    background-color: #171717;
+    color: antiquewhite;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, apple color emoji, segoe ui emoji, Segoe UI Symbol, noto color emoji;
+    font-size: 20px;
+}
+
+body{
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    row-gap: 10px;
+}
+
+/* Navigation */
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul{
+    list-style: none;
+}
+
+nav li{
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a{
+    text-decoration: none;
+    color: var(--dark);
+    transition-duration: 1000ms;
+}
+
+nav a:hover{
+    color: aliceblue;
+}
+
+body > * {
+    grid-column: 2/-2;
+}
+
+
+.com_name{
+    font-size: 8rem;
+    margin-bottom: 0;
+}
+
+.com_description{
+    margin-top: 0;
+    color: #a3a3a3;
+    font-size: 2rem;
+}
+
+.item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: solid var(--dark) 1px;
+    padding: 20px 5px;
+    font-size: 1.23rem;
+    margin: 10px 0;
+    transition-duration: 60s;
+    transition-property: color;
+}
+
+.title{
+    color: white;
+}
+.date{
+    color: var(--dark);
+}
+
+.item:hover  .date{
+    color: white;
+}
+
+.footer{
+    color: var(--dark);
+    justify-self: center;
+    grid-column: 1/-1;
+}

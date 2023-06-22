@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Stories</title>
+</head>
+<style>
+    body{
+        display: grid;
+        place-content: center;
+        height: 95vh;
+    }
+    .wrapper-container{
+        width: 200px;
+        height: 300px;
+        border: solid 1px black;
+        background-color: lightgray;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    ul li img{
+        width: 200px;
+        height: 300px;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        object-position: center;
+    }
+    ul{
+        margin:0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+    }
+
+    ul li{
+        
+        list-style-type: none;
+        scroll-snap-align: start;
+
+    }
+</style>
+<body>
+    <div class="wrapper-container">
+        <ul>
+            <li><img src="https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2NlbmVyeXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" alt=""></li>
+            <li><img src="https://images.pexels.com/photos/1266810/pexels-photo-1266810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></li>
+            <li><img src="https://w0.peakpx.com/wallpaper/123/54/HD-wallpaper-scenery-lake-nature-sky-tree-water.jpg" alt=""></li>
+            <li><img src="https://w0.peakpx.com/wallpaper/609/946/HD-wallpaper-aurora-blue-lake-lights-night-northern-lights-pink-tree-planet-reflection-thumbnail.jpg" alt=""></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        display: grid;
+        place-content: center;
+    }
+    p{
+        max-inline-size: 65ch;
+    }
+
+    input{
+        border: none;
+        border-bottom: solid 2px rgba(0,0,0,0.5);
+        transition-property: all;
+        transition-duration: 100ms;
+    }
+
+    input:focus{
+        outline: none;
+        border-color: tomato;
+        border-bottom-width: 2px;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1>Guess The Number from 1 to 100</h1>
+        <p>In this Game, the program will generate a number between 1 to 100 and the user has to guess what that number is it.The game will end, if the user can't figure out the number after 10 guess. </p>
+        <label for="input">Enter the Number : </label>
+        <input type="text" name="value" id="value"><br><br>
+        <button id="submit">Submit</button> <br><br>
+        <label>Guessed :</label>  <span id="infor"> </span> <br><br>
+        <span id=status> </span>
+    </div>
+</body>
+<script>
+
+    let input = document.querySelector('#value');
+    let status = document.querySelector('#status')
+    let guessed_arr = document.querySelector('#infor')
+    let guessed = [];
+    let count = 0;
+    let number = getRandomNumber();
+    let submit = document.querySelector('#submit');
+    submit.addEventListener('click', start);
+
+
+
+    function getRandomNumber(){
+        return Math.floor((Math.random() * 100) + 1);
+    }
+
+    function getValue(){
+        return +input.value;
+    }
+
+    function statusUpdate(rand, val){
+        if(val > rand){
+            status.textContent = "Too High"
+        }else{
+            status.textContent = "Too Low"
+        }
+    }
+
+    function updateGuesses(value){
+        guessed_arr.textContent += value + " ";
+    }
+
+    function start(){
+        console.log(number);
+        let value = getValue();
+        if(number != value && count <10){
+            guessed[count] = value;
+            count++;
+            statusUpdate(number, value)
+            updateGuesses(value);
+        }else if(number == value){
+            status.textContent = "Hurry! You got it Correct."
+            input.value = "";
+            guessed_arr.value = "";
+        }else{
+            status.textContent = "Game Over";
+        }
+    }
+
+
+</script>
+</html>
