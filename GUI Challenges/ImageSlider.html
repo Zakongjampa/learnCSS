@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slide</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+    .slider1{
+        position: relative;
+    }
+
+    button{
+        position: absolute;
+        width: 50px;
+        top: 0;
+        bottom: 0;
+        background-color: transparent;
+        outline: transparent;
+        font-size: 3rem;
+        border: none;
+    }
+
+    button .left{
+        right: 0;
+    }
+
+
+    button .right{
+        left: 0;
+    }
+</style>
+<body>
+    <div class="slider1">
+        <img src="../img/1.jpg" alt="Some Images">
+        <button class="left">></button>
+        <button class="right"><</button>
+    </div>
+</body>
+</html>

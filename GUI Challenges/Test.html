@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+</head>
+<style>
+    form > *{
+        padding: 5px;
+        margin: 5px;
+    }
+</style>
+<body>
+    <h1>Stopwatch</h1>
+    <p id="time">00:00:00</p>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+
+    <br><br><br>
+
+    <div class="watchContainer">
+
+    </div>
+
+
+    <h1>Create a post</h1>
+    <form id="post">
+        <label>Title : </label>
+        <input type="text" name="title" id="title">
+        <br>
+        <label>Auther : </label>
+        <input type="text" name="auther" id="auther">
+        <br>
+        <label>Content : </label>
+        <br>
+        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+<script>
+    class Stopwatch {
+            constructor(display) {
+                this.running = false;
+                this.display = display;
+                this.reset();
+                this.print(this.times);
+            }
+
+            reset() {
+                this.times = {
+                    minutes: 0,
+                    seconds: 0,
+                    miliseconds: 0
+                };
+            }
+
+            print() {
+                this.display.innerText = this.format(this.times);
+            }
+
+            format(times) {
+                return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
+            }
+
+            start() {
+                if (!this.running) {
+                    this.running = true;
+                    this.watch = setInterval(() => this.step(), 10);
+                }
+            }
+
+            step() {
+                if (!this.running) return;
+                this.calculate();
+                this.print();
+            }
+
+            calculate() {
+                this.times.miliseconds += 1;
+                if (this.times.miliseconds >= 100) {
+                    this.times.seconds += 1;
+                    this.times.miliseconds = 0;
+                }
+                if (this.times.seconds >= 60) {
+                    this.times.minutes += 1;
+                    this.times.seconds = 0;
+                }
+            }
+
+            stop() {
+                this.running = false;
+                clearInterval(this.watch);
+            }
+        }
+
+
+    class Watch{
+        constructor(element){
+            this.element = element;
+        }
+
+        start(){
+            setInterval(()=>{
+                const d = new Date();
+                const time = d.toLocaleTimeString();
+                const date = d.toLocaleDateString();
+                this.display(time,date);
+            }, 1000)
+        }
+
+        display(t,d){
+            this.element.innerHTML = `<div class="watch">${t}</div><div class="watch">${d}</div>`
+        }
+    }    
+    
+    
+    class Post{
+        constructor(title, auther, content){
+            this.title = title;
+            this.auther = auther;
+            this.content = content;
+        }
+
+        toString(){
+            return `Title : ${this.title} \nAuther : ${this.auther} \nContent:${this.content}`;
+        }
+    }
+
+
+    class CreatePost{
+        constructor(element){
+            this.element = element;
+            this.getDetail();
+        }
+
+        getDetail(){
+            this.getChilds();
+            
+        }
+
+        getChilds(){
+            this.siblings = []
+            for(let sibling of this.element.childNode){
+                if(sibling.nodeType === NODE.ELEMENT_NODE){
+                    this.siblings.push(sibling);
+                }
+            }
+        }
+    }
+    
+    // utility or helper function 
+        function pad0(value) {
+            let result = value.toString();
+            if (result.length < 2) {
+                result = '0' + result;
+            }
+            return result;
+        }
+
+        const stopwatch = new Stopwatch(
+                document.querySelector('#time')
+            );
+
+            let startButton = document.getElementById('start');
+            startButton.addEventListener('click', () => stopwatch.start());
+
+            let stopButton = document.getElementById('stop');
+            stopButton.addEventListener('click', () => stopwatch.stop());
+
+            let resetButton = document.getElementById('reset');
+            resetButton.addEventListener('click', () => {
+                stopwatch.stop();
+                stopwatch.reset();
+                stopwatch.print();
+            });
+
+            watchElement = document.querySelector('.watchContainer');
+            let w = new Watch(watchElement)
+            w.start();
+
+
+    class StopWatch{
+        constructor(display){
+            this.display = display;
+            this.running = false;
+            this.reset();
+            this.print();
+        }
+
+        reset(){
+            this.times = {
+                minute : 0,
+                second : 0,
+                millisecond : 0
+            }
+        }
+
+        print(){
+            this.display.innerHTML = this.format(this.times);
+        }
+
+        format(times){
+            return `${pd0(times.minute)} : ${pd0(times.second)} : ${pd0(times.milisecond)} `;
+        }
+
+        start(){
+            if(!this.running){
+                this.running = true;
+                this.watch = setInterval(this.step, 10);
+            }
+           
+        }
+
+        step(){
+            if(!running) return;
+            this.calculate();
+            this.print();
+        }
+
+        calculate(){
+            this.times.milisecond++;
+            if(this.times.millisecond > 100){
+                this.times.second++;
+                this.times.millisecond =0;
+            }
+
+            if(this.times.second > 60){
+                this.times.minute++;
+                this.second =0;
+            }
+        }
+    }
+
+
+    function pd0(t){
+        let value = t.toString();
+        if(value.length < 2){
+            value = "0"+value;
+        }
+        return value;
+    }
+</script>
+</html>

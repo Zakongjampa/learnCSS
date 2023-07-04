@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List Using LocalStorage</title>
+</head>
+<body>
+    <style>
+        body{
+            width: 95vw;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            min-width: 500px;
+            text-align: center;
+            background-color: lemonchiffon;
+            padding: 30px;
+        }
+
+        .close{
+            color: red;
+            margin-left: 100px;
+            cursor: pointer;
+        }
+    </style>
+    <div class="container">
+        <h1>To Do List</h1>
+        <ol>
+        </ol>
+        <input type="text" name="field" id="field">
+        <button>Add</button>
+        <button>Clear</button>
+    </div>
+</body>
+<script>
+    let field = document.getElementById('field');
+    let buttons = document.getElementsByTagName('button')
+    let list = document.getElementsByTagName('ol')[0];
+    let add = buttons[0];
+    let clear = buttons[1];
+    let count = +initCount();
+    let event = null;
+
+
+    displayAll();
+    clear.addEventListener('click', clearField);
+    add.addEventListener('click', addToDo);
+
+    list.addEventListener('click', (e)=>{
+        event =e;
+        let v = event.target.parentElement.textContent;
+        v = v.slice(0,-1);
+        deleteBaseOnValue(v);
+        displayAll();
+    })
+    function deleteBaseOnValue(val){
+        for(let i=0; i<localStorage.length; i++){
+            let key = localStorage.key(i);
+            let value = localStorage.getItem(key);
+
+            if(value == val){
+                deleteToDoOnKey(key)
+                break;
+            }
+        }
+    }
+
+    function deleteToDoOnKey(key){
+        localStorage.removeItem(key);
+    }
+
+    function initCount(){
+        if(localStorage.getItem('count')!= null){
+            return localStorage.getItem('count');
+        }
+        localStorage.setItem('count', "0");
+        return 0;
+    }
+    
+    function addToDo(){
+        let value = field.value;
+        if(value != null && checkDuplicate(value)){
+            localStorage.setItem(''+count,value);
+            count++;
+            localStorage.setItem('count',''+count)
+            let li = subList(value);
+            list.appendChild(li);
+            clearField();
+        }else{
+            alert("Enter the textfield or already in todo list");
+        }
+    }
+
+    function checkDuplicate(val){
+        for(let i=0; i<count; i++){
+            let key = localStorage.key(i);
+            let value = localStorage.getItem(key);
+            
+            if(value == val)
+                return false;
+        }
+
+        return true;
+    }
+
+    function displayAll(){
+        removeAllChild();
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            if(key != 'count'){
+                let value = localStorage.getItem(key);
+                let li = subList(value)
+                list.appendChild(li);
+            }
+        } 
+    }
+
+
+    function subList(e){
+        let li = document.createElement('li')
+        li.textContent =e;
+
+        let close = document.createElement('span')
+        close.setAttribute('class', 'close');
+        close.textContent = 'x';
+        li.appendChild(close);
+        return li;
+    }
+
+    function clearField(){
+        field.value = '';
+    }
+    
+    function removeAllChild(){
+        while(list.firstChild){
+            list.removeChild(list.firstChild);
+        }
+    }
+</script>
+</html>

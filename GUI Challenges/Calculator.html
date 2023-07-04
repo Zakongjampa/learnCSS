@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<style>
+
+    *{
+        box-sizing: border-box;
+    }
+
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .calculator{
+        max-width: 500px;
+        display: grid;
+        border: solid 1px black;
+        padding: 10px;
+        text-align: center;
+        font-size: 3rem;
+        border-radius: 5px;
+    }
+
+    .text{
+        grid-row: 1/-1;
+    }
+
+    #field  *{
+        padding : 5px
+    }
+
+    .text input{
+        width: 100%;
+        font-size: 3rem;
+        margin-bottom: 10px;
+        background-color: black;
+        color: white;
+        padding: 20px 10px;
+    }
+
+    .row{
+        grid-row: 1/-1;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 10px 10px;
+        place-content: center;
+    }
+
+    .row span{
+        background-color: hsl(228, 5%, 79%);
+        padding: 10px;
+        margin-bottom: 10px;
+        transition-property: background-color;
+        transition-duration: 500ms;
+        cursor: pointer;
+    }
+
+    .row span:hover{
+        background-color: aliceblue;
+    }
+
+
+    .row span:last-child{
+        background-color: hsl(32, 94%, 51%);
+        color: white;
+    }
+
+    .zero{
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+   
+    
+    
+</style>
+<body>
+        <p>First Tibetan Calculator</p>
+
+    <div class="calculator">
+        <div class="text">
+            <input type="text" name="field" id="field">
+        </div>
+        <div class="numpad">
+            <div class="row">
+                <span class="clear">C</span>
+                <span class="mod operator">%</span>
+                <span class="mod operator">%</span>
+                <span class="div operator">/</span>
+            </div>
+            <div class="row">
+                <span class="7">༧</span>
+                <span class="8">༨</span>
+                <span class="9">༩</span>
+                <span class="multi operator">*</span>
+            </div>
+
+            <div class="row">
+                <span class="4">༤</span>
+                <span class="5">༥</span>
+                <span class="6">༦</span>
+                <span class="sub">-</span>
+            </div>
+
+            <div class="row">
+                <span class="one">༡</span>
+                <span class="2">༢</span>
+                <span class="3">༣</span>
+                <span class="add operator">+</span>
+            </div>
+
+            <div class="row">
+                <span class="zero">0</span>
+                <span class="dot">.</span>
+                <span class="eq operator">=</span>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let numpad = document.getElementsByClassName('numpad')[0]
+    let textField = document.getElementById('field')
+    let clearBtn = document.getElementsByClassName('clear')[0]
+    let operator = document.querySelector('.operator')
+    let eq = document.querySelector('.eq');
+    eq.addEventListener('click', eqBtn);
+    let clicked=''
+    let field ="";
+
+    let operators = ["=", "+", "-", "*"];
+
+    numpad.addEventListener('click', (event)=>{
+        clicked = event.target
+        
+        if(clicked.textContent ==='C') return
+        else{
+            if(!clicked.classList.contains('eq')){
+                field += event.target.textContent;
+                updateDisplay();
+
+            }else if(event.target.classList.contains('operator')){
+                field+= "<span class='operator'>" + event.target.textContent + "</span>"
+            }
+                
+        }
+        
+    })
+
+
+
+    function updateDisplay(){
+        textField.value = field;
+
+    }
+
+    clearBtn.addEventListener('click', clear)
+
+    function clear(){
+        field=""
+        updateDisplay();
+    }
+
+    function calculate(){
+        let content = textField.value;
+        let new_content=0;
+        for(i=0; i<content.length; i++){
+            if(!operators.includes(content[i])){
+                new_content = new_content+tibToNumber(content[i]);
+                console.log(tibToNumber(content[i]))
+
+            }else{
+                new_content = new_content + content[i];
+            }
+        }
+        return eval(new_content);
+    }
+
+   
+
+    function eqBtn(){
+        field='';
+        let result = calculate();
+        let arr=[];
+        while(result>1){
+            let n = result % 10;
+            n = numberToTib(n);
+            result = result/10;
+            arr.push(n);
+        }
+
+        arr = arr.reverse();
+        clear();
+        textField.value = arr.toString();
+
+        
+    }
+
+    
+    
+    function tibToNumber(value){
+        return Number(String.fromCharCode(value.charCodeAt(0) - 3824))
+    }
+
+    function numberToTib(value){
+        return String.fromCharCode(value.toString().charCodeAt(0) + 3824)
+    }
+
+</script>
+</html>
