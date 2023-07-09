@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API using Open-Meteo</title>
+</head>
+<body>
+    <div class="container">
+
+    </div>
+</body>
+<script>
+   let latitude, longitude;
+   let data;
+
+    function getCurrentPosition() {
+        return new Promise((resolve, reject) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            } else {
+                reject(new Error("Geolocation is not supported by this browser."));
+            }
+        });
+    }
+
+    async function geoLatLong() {
+        try {
+            const position = await getCurrentPosition();
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            console.log("Latitude:", latitude);
+            console.log("Longitude:", longitude);
+
+            // Call a function or perform actions with the latitude and longitude here
+            // Example: saveCoordinates(latitude, longitude);
+
+            let url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,relativehumidity_2m,rain`;
+            
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error("Failed to fetch data from the API.");
+            }
+
+            data = await response.json();
+            console.log("API response:", data);
+        } catch (error) {
+            console.error("Error getting location:", error.message);
+        }
+    }
+
+    geoLatLong();
+    
+    let table = document.createElement('table');
+    let hours = document.createElement('th');
+    hours.textContent = 'Times'
+
+    let rain = document.createElement('th')
+    rain.textContent = "Rains"
+
+    let temp = document.createElement('th');
+    temp.textContent = "Temperature"
+
+    table.appendChild(hours)
+    table.appendChild(rain)
+    table.appendChild(temp)
+    
+    //function populateTable(table){
+        for(let i=0; i<data.hourly.time.length; i++){
+            let row = table.insertRow();
+            let hour = row.insertCell()
+            let rain = row.insertCell()
+            let temp = row.insertCell()
+
+            hour.textContent = data.hourly.time[i];
+            rain.textContent = data.hourly.rain[i] + " " + data.hourly_units.rain;
+            temp.textContent = data.hourly.temperature_2m[i] + " " + data.hourly_units.temperature_2m;
+        }
+        
+    //}
+
+    document.body.appendChild(table);
+
+</script>
+</html>
