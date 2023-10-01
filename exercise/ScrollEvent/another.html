@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing </title>
+</head>
+<style>
+
+    button[aria-selected="true"] {
+        background: var(--yellow);
+        box-shadow: none;
+        color: rgba(0, 0, 0, 0.7);
+    }
+</style>
+<body>
+    
+
+    <div class="wrapper">
+        <div class="tabs">
+            <div role="tablist" aria-label="Programming Languages">
+                <button role="tab" aria-selected="true" id="js">
+                    JavaScript
+                </button>
+                <button role="tab" aria-selected="false" id="ruby">Ruby
+                </button>
+                <button role="tab" aria-selected="false" id="php">
+                    PHP
+                </button>
+            </div>
+            <div role="tabpanel" aria-labelledby="js">
+                <p>JavaScript is great!</p>
+            </div>
+            <div role="tabpanel" aria-labelledby="ruby" hidden>
+                <p>Ruby is great</p>
+            </div>
+            <div role="tabpanel" aria-labelledby="php" hidden>
+                <p>PHP is great!</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    
+
+    const tabs = document.querySelector('.tabs');
+        const tabButtons = tabs.querySelectorAll('[role="tab"]');
+        const tabPanels = tabs.querySelectorAll('[role="tabpanel"]');
+
+        tabButtons.forEach(button => button.addEventListener('click', handleTabArray));
+
+        function handleTabClick(event) {
+            // hide all the tab panels 
+            tabPanels.forEach(tab => {
+                tab.hidden = true;
+            });
+
+            // mark all tabs as unselected 
+            tabButtons.forEach(btn =>{
+                btn.setAttribute('aria-selected', 'false');
+            })
+
+            // marked clicked tab as selected 
+            event.target.setAttribute('aria-selected', true);
+
+            let label = event.target.getAttribute('id');
+
+            tabPanels.forEach(tab =>{
+                if(tab.getAttribute('aria-labelledby')== label){
+                    tab.hidden= false;
+                }
+            })
+
+
+
+        }
+
+        function handleTabArray(event){
+            // hide all the tab panels 
+            tabPanels.forEach(tab => {
+                    tab.hidden = true;
+                });
+            // mark all tabs as unselected 
+            tabButtons.forEach(btn => {
+                btn.setAttribute('aria-selected', 'false');
+            })
+            // marked clicked tab as selected 
+            const panels = Array.from(tabPanels)
+            event.target.setAttribute('aria-selected', true);
+
+            const {id} = event.currentTarget;
+            console.log("ID : ",id)
+            let panel = panels.find( (p)=>{
+                if(p.getAttribute('aria-labelledby') === id)
+                    return true;
+            });
+            panel.hidden = false;
+
+        }
+
+</script>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Another Test</title>
+</head>
+<body>
+    
+</body>
+<script>
+    const toppings = ['Mushrooms', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chilles', 'Bacon', 'Pickles', 'Onions', 'Cheese'];
+
+   function logTopping(topping, index, array) {
+        console.log(topping, index, array);
+        debugger;
+    }
+
+    function countDown(date) {
+        let d = new Date(date);
+        let hour, minute, sec;
+        if(d.getTime() > Date.now()){
+           let countDown = d.getTime() - Date.now();
+            hour = Math.floor(countDown / (1000 * 60 * 60));
+            countDown = countDown % (1000 * 60 * 60);
+            minute = Math.floor(countDown / (1000 * 60));
+            countDown = countDown % (1000 * 60);
+            sec = Math.floor(countDown / 1000);
+        }else{
+            hour=0, minute=0, sec=0;
+        }
+        
+        return {
+            hour,minute,sec,
+        }
+    }
+
+    window.setInterval(()=>{
+        let date = '2023-09-05 22:15:00';
+        let { hour, minute, sec } = countDown(date);
+        document.body.textContent = ` ${hour>10?hour:'0'+hour} : ${minute>10?minute:'0'+minute} : ${sec>10?sec:'0'+sec}`;
+    }, 1000)
+
+    const orderTotals = [342, 1002, 523, 34, 634, 854, 1644, 2222];
+
+    function tallyNumbers(tally, currentTotal) {
+        debugger;
+       return tally +currentTotal;
+    }
+
+    const inventory = [
+            { type: 'shirts', price: 4000 },
+            { type: 'pants', price: 4532 },
+            { type: 'socks', price: 234 },
+            { type: 'shirts', price: 2343 },
+            { type: 'pants', price: 2343 },
+            { type: 'socks', price: 542 },
+            { type: 'pants', price: 123 },
+    ];
+
+    function inventoryReducer(acc, item){
+        acc[item.type] = acc[item.type] + 1 || 1;
+        acc.total++;
+        return acc;
+    }
+
+    const inventoryCount = inventory.reduce(inventoryReducer,{
+        shirts: 0,
+        pants: 0,
+        socks: 0,
+        total : 0,
+    })
+
+    const totalInventoryPrice = inventory.reduce((acc,item) => acc +item.price, 0)
+    console.log("Total Price :", totalInventoryPrice)
+</script>
+</html>

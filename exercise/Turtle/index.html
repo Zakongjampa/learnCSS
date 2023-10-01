@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing </title>
+</head>
+<style>
+    *{
+        box-sizing: border-box;
+    }
+
+    .ground{
+        width: 100%;
+        height: 500px;
+        background-color: greenyellow;
+        position: relative;
+        margin: 0;
+    }
+
+    .ball{
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        border: solid 1px black;
+    }
+</style>
+<body>
+    <div class="ground">
+        <div class="ball">
+        
+        </div>
+    </div>
+</body>
+
+<script>
+    let ball = document.querySelector('.ball');
+    let ground = document.querySelector('.ground');
+    let x=0; 
+    let y = 0;
+    let MOVE_DISTANCE = 10;
+
+
+    ball.style.top = y + "px";
+    ball.style.left =x + 'px'; 
+    window.addEventListener('keydown', dribble)
+
+    function dribble(event){
+        if(!event.key.includes('Arrow'))
+            return;
+        
+        switch(event.key){
+            case 'ArrowDown': ground.clientHeight-50 > y+MOVE_DISTANCE ? y = y+MOVE_DISTANCE : y = ground.clientHeight-50;
+            break;
+            case 'ArrowLeft' : (x - MOVE_DISTANCE) > 0 ? x= x-MOVE_DISTANCE : x =0;
+            break;
+            case 'ArrowRight' : ground.clientWidth - 50 > x+MOVE_DISTANCE ?  x = x+MOVE_DISTANCE : x = ground.clientWidth-50;
+            break;
+            case 'ArrowUp' :  y-MOVE_DISTANCE > 0 ? y = y-MOVE_DISTANCE : y=0;
+            break;
+        }
+
+
+        ball.style.top = y + "px";
+        ball.style.left = x + 'px'; 
+
+    }
+</script>
+</html>

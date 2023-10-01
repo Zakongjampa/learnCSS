@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Fact</title>
+</head>
+<style>
+    .container{
+        width: 100%;
+        height: 700px;
+        background-image: url("https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        border: solid 1px red;
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .container blockquote{
+        position: absolute;
+        bottom: 10px;
+        font-size: 1.6rem;
+        text-align: center;
+        
+    }
+</style>
+<body>
+    <div class="container">
+        <blockquote>"Some text will come here"</blockquote>
+    </div>
+        <button id="change">Change Fact</button>
+
+</body>
+
+<script>
+    let btn = document.querySelector('#change');
+    btn.addEventListener('click', changeFact);
+
+    function changeFact(){
+        let url = "https://catfact.ninja/fact";
+        let fact;
+        let quote = document.getElementsByTagName('blockquote')[0];
+
+        let data = fetch(url).then(res => res.json()).then(data => {
+            quote.textContent = data.fact;
+        }).catch(err => {
+            console.log(err);
+        })
+
+    }
+  
+</script>
+</html>
